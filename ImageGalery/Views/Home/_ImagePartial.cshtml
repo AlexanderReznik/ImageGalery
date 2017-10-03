@@ -1,6 +1,8 @@
 ﻿@model ImageGalery.Models.ImageModel
 
-<div>
+<div class="image-with-text">
     <img src=@Url.Content(Model.Path) width="300"/>
-    @Model.Description
+    <div class="text-on-image">
+        @Model.Description
+    </div>
 </div>
