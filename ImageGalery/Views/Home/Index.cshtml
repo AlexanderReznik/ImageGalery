@@ -1,4 +1,5 @@
-﻿@model IEnumerable<ImageGalery.Models.ImageModel>
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<ImageGalery.Models.ImageModel>
 
 @{
     ViewBag.Title = "Image Galery";
@@ -8,3 +9,5 @@
 {
     Html.RenderPartial("_ImagePartial", i);
 }
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new {page}))

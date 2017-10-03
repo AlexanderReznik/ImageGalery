@@ -4,21 +4,27 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ImageGalery.Models;
+using PagedList;
 
 namespace ImageGalery.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        private List<ImageModel> list;
+        private int pageSize = 4;
+        public HomeController()
         {
-            List<ImageModel> list = new List<ImageModel>
+            list = new List<ImageModel>();
+            for (int i = 1; i <= 16; i++)
             {
-                new ImageModel {Path = "~/Content/Images/1.jpg", Description = "Some Text 1"},
-                new ImageModel {Path = "~/Content/Images/2.jpg", Description = "Some Text 2"},
-                new ImageModel {Path = "~/Content/Images/3.jpg", Description = "Some Text 3"},
-                new ImageModel {Path = "~/Content/Images/4.jpg", Description = "Some Text 4"}
-            };
-            return View(list);
+                list.Add(new ImageModel{ Path = $"~/Content/Images/{i}.jpg", Description = $"Some Text {i}" });
+            }
+
+        }
+        public ActionResult Index(int? page)
+        {
+            int pageNumber = page ?? 1;
+            return View(list.ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult About()
